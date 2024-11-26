@@ -1,0 +1,19 @@
+[sshd]
+# Ban hosts that attempt multiple authentication failures
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+findtime = 10m
+bantime = 1d
+
+# Reject both IPv4 and IPv6 connections
+backend = auto
+
+# Specific actions to take when an IP is banned
+action = iptables-multiport[name=SSH, port="22", protocol=tcp]
+
+# Optional: Send an email alert when an IP is banned
+# actionban = %(action_mwl)s
+
